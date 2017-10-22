@@ -80,11 +80,11 @@ class Colour(object):
         self.h, self.s, self.b = h, s, b
         # Each colour can contain a swatch of shades, each of which is a Colour
         self._shades = []
-        self.num_shades = 4
-        self.shade_saturation_min = 30
-        self.shade_saturation_max = 70
-        self.shade_brightness_min = 70
-        self.shade_brightness_max = 30
+        self.num_shades = 6
+        self.shade_saturation_min = 0.6  * self.s
+        self.shade_saturation_max = 1 * self.s
+        self.shade_brightness_min = 1 * self.b
+        self.shade_brightness_max = 0.6 * self.b
         
     def shades(self):
         '''

@@ -68,8 +68,8 @@ def draw():
     '''
     
     # These are fairly decent default values
-    s = 50
-    b = 50
+    s = 100
+    b = 100 
     
     if MODE == 'STANDARD':
         '''
