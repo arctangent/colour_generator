@@ -1,5 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
+import colorsys
+from random import uniform
 
 class ColourGenerator(object):
     '''
@@ -19,13 +21,13 @@ class ColourGenerator(object):
     @staticmethod
     def generate_complementary_hues(hue_val=None):
         # Returns two complementary hues
-        h1 = hue_val or random(360)
+        h1 = hue_val or uniform(0, 360)
         h2 = (h1 + 180) % 360
         
     @staticmethod
     def generate_triad_hues(hue_val=None):
         # Returns three hues equidistant on colour wheel
-        h1 = hue_val or random(360)
+        h1 = hue_val or uniform(0, 360)
         h2 = (h1 + 120) % 360
         h3 = (h1 - 120) % 360
         return h1, h2, h3
@@ -33,7 +35,7 @@ class ColourGenerator(object):
     @staticmethod
     def generate_tetrad_hues(hue_val=None):
         # Returns four hues equidistant on colour wheel
-        h1 = hue_val or random(360)
+        h1 = hue_val or uniform(0, 360)
         h2 = (h1 + 90) % 360
         h3 = (h1 + 180) % 360
         h4 = (h1 + 270) % 360
@@ -46,9 +48,9 @@ class ColourGenerator(object):
     @staticmethod
     def generate_random_hsb(h=None, s=None, b=None):
         # Return a random colour, allowing user to specify fixed values if required
-        h = h or random(360)
-        s = s or random(100)
-        b = b or random(100)
+        h = h or uniform(0, 360)
+        s = s or uniform(0, 100)
+        b = b or uniform(0, 100)
         return h, s, b
         
     @staticmethod
@@ -70,7 +72,7 @@ class Colour(object):
     '''
     A class to represent a colour and to help generate shades
     
-    Assumes colorMode(HSB, 360, 100, 100)
+    Assumes a HSB colour mode with max values: 360, 100, 100
     '''
     
     def __init__(self, h=None, s=None, b=None):
@@ -85,6 +87,22 @@ class Colour(object):
         self.shade_saturation_max = 1 * self.s
         self.shade_brightness_min = 1 * self.b
         self.shade_brightness_max = 0.6 * self.b
+
+    def as_rgb_string(self):
+        '''
+        Convert to a string like "ffc812"
+        '''
+
+        h = self.h / 360
+        s = self.s / 100
+        b = self.b / 100
+
+        # This isn't a very pretty way to do things
+        r, g, b = colorsys.hls_to_rgb(h, b, s)
+        rr, gg, bb = (int(255 * r), int(255 * g), int(255 * b))
+        hex_string = "#%02x%02x%02x" % (rr, gg, bb)
+        return hex_string
+
         
     def shades(self):
         '''
