@@ -141,7 +141,7 @@ def save_image(*ignore):
     y2 = y1 + canvas.winfo_height()
     
     # Save the image
-    ImageGrab.grab((x1, y1, canvas_width, canvas_height)).save(image_name)
+    ImageGrab.grab((x1, y1, x2, y2)).save(image_name)
 
 
 
